@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+/* ===== Tailwind v4 Theme Configuration ===== */
+/* Corporate colors for Transmeba (equivalent to tailwind.config.ts) */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Primary: Verde azulado corporativo (#008B8B - Dark Cyan) */
+  --color-primary-50: #e6f7f7;
+  --color-primary-100: #ccefef;
+  --color-primary-200: #99dfdf;
+  --color-primary-300: #66cfcf;
+  --color-primary-400: #33bfbf;
+  --color-primary-500: #008B8B;
+  --color-primary-600: #007070;
+  --color-primary-700: #005454;
+  --color-primary-800: #003838;
+  --color-primary-900: #001c1c;
+
+  /* Secondary: Grises neutros */
+  --color-secondary-50: #f9fafb;
+  --color-secondary-100: #f3f4f6;
+  --color-secondary-200: #e5e7eb;
+  --color-secondary-300: #d1d5db;
+  --color-secondary-400: #9ca3af;
+  --color-secondary-500: #6b7280;
+  --color-secondary-600: #4b5563;
+  --color-secondary-700: #374151;
+  --color-secondary-800: #1f2937;
+  --color-secondary-900: #111827;
+
+  /* Typography: Geist Sans (Next.js 14+ default) */
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+}
+
+/* ===== CSS Variables ===== */
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+/* ===== Base Styles (Mobile First) ===== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+h1 {
+  font-size: 1.875rem; /* text-3xl */
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.3;
+}
+
+h3 {
+  font-size: 1.25rem; /* text-xl */
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.4;
+}
+
+p {
+  font-size: 1rem; /* text-base */
+  line-height: 1.625;
+}
+
+/* Responsive typography (md: 768px+) */
+@media (min-width: 768px) {
+  h1 {
+    font-size: 2.25rem; /* text-4xl */
+  }
+  h2 {
+    font-size: 1.875rem; /* text-3xl */
+  }
+  h3 {
+    font-size: 1.5rem; /* text-2xl */
+  }
+  p {
+    font-size: 1.125rem; /* text-lg */
+  }
+}
+
+/* Responsive typography (lg: 1024px+) */
+@media (min-width: 1024px) {
+  h1 {
+    font-size: 3rem; /* text-5xl */
+  }
+  h2 {
+    font-size: 2.25rem; /* text-4xl */
+  }
+}
+
+/* ===== Component Classes ===== */
+
+/* Contenedor principal responsive */
+.container-custom {
+  width: 100%;
+  max-width: 80rem; /* max-w-7xl */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-custom {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-custom {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Sección con padding vertical */
+.section-padding {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-padding {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+/* ===== Utility Classes ===== */
+
+.text-balance {
+  text-wrap: balance;
+}
