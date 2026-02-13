@@ -1,65 +1,89 @@
-import Image from "next/image";
+/**
+ * Página de inicio de Transmeba S.A.
+ *
+ * NOTA PARA MIGRACIÓN A STRAPI CMS:
+ * - Actualmente consume datos estáticos de lib/data.ts y lib/constants.ts
+ * - Para integrar Strapi, reemplazar imports por llamadas a lib/strapi.ts:
+ *   - companyInfo → await getCompanyInfo()
+ *   - services → await getServices()
+ *   - values → await getValues()
+ *   - certifications → await getCertifications()
+ * - Convertir componente a async function y usar Server Components
+ * - Implementar revalidación con revalidate: 3600 (1 hora)
+ */
+
+import type { Metadata } from 'next';
+import HeroSection from '@/components/sections/HeroSection';
+import MissionVisionSection from '@/components/sections/MissionVisionSection';
+import ServicesGrid from '@/components/sections/ServicesGrid';
+import HSEQSection from '@/components/sections/HSEQSection';
+import Card from '@/components/ui/Card';
+import { values } from '@/lib/data';
+
+export const metadata: Metadata = {
+  title: 'Transmeba S.A. | Transporte Medellín - Barbosa desde 1972',
+  description:
+    'Empresa líder en transporte público intermunicipal. Más de 50 años conectando Medellín y Barbosa con seguridad, calidad y certificaciones ISO 9001, ISO 14001, ISO 39001.',
+  keywords: [
+    'transporte público',
+    'Medellín',
+    'Barbosa',
+    'ISO 9001',
+    'ISO 14001',
+    'ISO 39001',
+    'transporte intermunicipal',
+    'Antioquia',
+  ],
+  openGraph: {
+    title: 'Transmeba S.A. | Transporte Medellín - Barbosa desde 1972',
+    description:
+      'Empresa líder en transporte público intermunicipal. Más de 50 años conectando Medellín y Barbosa con seguridad, calidad y certificaciones ISO 9001, ISO 14001, ISO 39001.',
+    type: 'website',
+    locale: 'es_CO',
+    siteName: 'Transmeba S.A.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Transmeba S.A. | Transporte Medellín - Barbosa desde 1972',
+    description:
+      'Empresa líder en transporte público intermunicipal. Más de 50 años conectando Medellín y Barbosa con seguridad, calidad y certificaciones ISO 9001, ISO 14001, ISO 39001.',
+  },
+};
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <HeroSection />
+      <MissionVisionSection />
+      <ServicesGrid />
+
+      {/* Sección de Valores Corporativos */}
+      <section className="py-12 md:py-20 px-4 md:px-8 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-secondary-900">
+              Nuestros Valores
+            </h2>
+            <p className="text-base md:text-lg text-secondary-600 text-center max-w-3xl mx-auto">
+              Los principios que guían nuestro actuar diario y definen nuestra
+              cultura organizacional.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {values.map((value) => (
+              <Card
+                key={value.id}
+                icon={value.icon}
+                title={value.title}
+                description={value.description}
+              />
+            ))}
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </section>
+
+      <HSEQSection />
+    </>
   );
 }
