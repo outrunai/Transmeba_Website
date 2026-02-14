@@ -2,7 +2,8 @@ import type {
   Service,
   Value,
   Certification,
-  CompanyInfo
+  CompanyInfo,
+  Route
 } from '@/types';
 
 /**
@@ -119,6 +120,18 @@ export async function getCompanyInfo(): Promise<CompanyInfo> {
     employees: data.data.attributes.employees,
     mainRoute: data.data.attributes.mainRoute,
   };
+}
+
+export async function getRoutes(): Promise<Route[]> {
+  const data = await fetchStrapi<{ data: any[] }>('/routes?populate=*');
+
+  return data.data.map((item) => ({
+    id: item.id.toString(),
+    origin: item.attributes.origin,
+    destination: item.attributes.destination,
+    frequency: item.attributes.frequency,
+    duration: item.attributes.duration,
+  }));
 }
 */
 

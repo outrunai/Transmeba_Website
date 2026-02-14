@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://transmeba.com'),
   title: "Transmeba S.A. | Transporte Medellín - Barbosa",
   description:
     "Empresa de transporte público intermunicipal entre Medellín y Barbosa. Más de 50 años conectando la región con seguridad y calidad. Certificaciones ISO 9001, ISO 14001, ISO 39001.",
