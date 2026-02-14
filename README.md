@@ -100,22 +100,18 @@ nano .env.local
 
 Contenido de `.env.local` para producción:
 
-```env
-# --- Strapi CMS ---
-# Descomentar cuando Strapi esté corriendo en el VPS
-# NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
-# STRAPI_API_TOKEN=tu_token_de_strapi_aqui
+| Variable | Descripción | Ejemplo |
+|---|---|---|
+| `NEXT_PUBLIC_STRAPI_URL` | URL del servidor Strapi (descomentar cuando esté activo) | `http://localhost:1337` |
+| `STRAPI_API_TOKEN` | Token de API generado en Strapi Admin | *(generar en Strapi)* |
+| `SMTP_HOST` | Servidor SMTP para envío de correos PQRS | *(tu proveedor SMTP)* |
+| `SMTP_PORT` | Puerto del servidor SMTP | `587` |
+| `SMTP_USER` | Usuario/email para autenticación SMTP | *(tu email corporativo)* |
+| `SMTP_PASSWORD` | Contraseña o App Password del SMTP | *(tu contraseña)* |
+| `SMTP_FROM` | Dirección de remitente en correos | *(email de no-reply)* |
+| `NEXT_PUBLIC_SITE_URL` | URL pública del sitio en producción | `https://tu-dominio.com` |
 
-# --- Configuración SMTP (para formulario PQRS) ---
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=tu_email@transmeba.com.co
-SMTP_PASSWORD=tu_contraseña_de_aplicacion
-SMTP_FROM=noreply@transmeba.com.co
-
-# --- URL del Sitio ---
-NEXT_PUBLIC_SITE_URL=https://www.transmeba.com.co
-```
+> Consulta `.env.example` en el proyecto para ver la plantilla completa. Copia y renombra a `.env.local` con tus valores reales.
 
 > **Seguridad:** Nunca subas `.env.local` al repositorio. Ya está en `.gitignore`.
 
@@ -201,9 +197,12 @@ sudo apt install -y postgresql postgresql-contrib
 
 # Crear usuario y base de datos
 sudo -u postgres psql
+```
 
-# Dentro de la consola de PostgreSQL:
-CREATE USER strapi_user WITH PASSWORD 'tu_contraseña_segura';
+Dentro de la consola de PostgreSQL, ejecutar (reemplazar `<DB_PASSWORD>` con una contraseña segura generada con `openssl rand -base64 24`):
+
+```sql
+CREATE USER strapi_user WITH PASSWORD '<DB_PASSWORD>';
 CREATE DATABASE transmeba_strapi OWNER strapi_user;
 GRANT ALL PRIVILEGES ON DATABASE transmeba_strapi TO strapi_user;
 \q
@@ -216,26 +215,24 @@ cd /var/www/transmeba-strapi
 nano .env
 ```
 
-```env
-HOST=0.0.0.0
-PORT=1337
-APP_KEYS=generar_claves_aleatorias_aqui
-API_TOKEN_SALT=generar_salt_aleatorio
-ADMIN_JWT_SECRET=generar_jwt_secret
-TRANSFER_TOKEN_SALT=generar_salt_aleatorio
-JWT_SECRET=generar_jwt_secret
+| Variable | Descripción |
+|---|---|
+| `HOST` | `0.0.0.0` |
+| `PORT` | `1337` |
+| `APP_KEYS` | Generar con `openssl rand -base64 32` |
+| `API_TOKEN_SALT` | Generar con `openssl rand -base64 32` |
+| `ADMIN_JWT_SECRET` | Generar con `openssl rand -base64 32` |
+| `TRANSFER_TOKEN_SALT` | Generar con `openssl rand -base64 32` |
+| `JWT_SECRET` | Generar con `openssl rand -base64 32` |
+| `DATABASE_CLIENT` | `postgres` |
+| `DATABASE_HOST` | `127.0.0.1` |
+| `DATABASE_PORT` | `5432` |
+| `DATABASE_NAME` | `transmeba_strapi` |
+| `DATABASE_USERNAME` | `strapi_user` |
+| `DATABASE_PASSWORD` | *(la misma `<DB_PASSWORD>` del paso 5.2)* |
+| `DATABASE_SSL` | `false` |
 
-# Base de datos
-DATABASE_CLIENT=postgres
-DATABASE_HOST=127.0.0.1
-DATABASE_PORT=5432
-DATABASE_NAME=transmeba_strapi
-DATABASE_USERNAME=strapi_user
-DATABASE_PASSWORD=tu_contraseña_segura
-DATABASE_SSL=false
-```
-
-> **Generar claves seguras:** `openssl rand -base64 32` (ejecutar una vez por cada clave).
+> **Cada clave debe ser única.** Ejecutar `openssl rand -base64 32` una vez por cada variable que requiera generación.
 
 ### 5.4 Construir y Desplegar Strapi con PM2
 
